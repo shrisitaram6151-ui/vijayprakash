@@ -1,0 +1,17 @@
+User-agent: *
+Disallow: /mji-console-8303
+Disallow: /mji-console-8303/
+Disallow: /api/admin/
+Disallow: /booking/status
+Disallow: /_next/
+Disallow: /api/payment/
+Disallow: /api/callback
+
+User-agent: GPTBot
+Disallow: /
+
+User-agent: ChatGPT-User
+Disallow: /
+
+User-agent: Google-Extended
+Disallow: /
