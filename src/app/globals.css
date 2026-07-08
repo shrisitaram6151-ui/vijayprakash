@@ -1,0 +1,79 @@
+@import "tailwindcss";
+
+:root {
+  --gold: #d4af37;
+  --gold-light: #f5d77a;
+}
+
+@theme inline {
+  --font-serif: var(--font-cinzel), serif;
+  --font-sans: var(--font-deva), ui-sans-serif, system-ui, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-deva), ui-sans-serif, system-ui, sans-serif;
+}
+
+.font-display {
+  font-family: var(--font-cinzel), serif;
+}
+
+.gold-text {
+  background: linear-gradient(180deg, #f7e08a 0%, #d4af37 55%, #a87d1c 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.gold-border {
+  border: 1px solid rgba(212, 175, 55, 0.35);
+}
+
+.gold-gradient {
+  background: linear-gradient(135deg, #f5d77a 0%, #d4af37 50%, #b8891f 100%);
+}
+
+.card-dark {
+  background: linear-gradient(160deg, rgba(38, 27, 14, 0.9), rgba(20, 14, 8, 0.95));
+  border: 1px solid rgba(212, 175, 55, 0.22);
+}
+
+.radial-glow {
+  background: radial-gradient(
+    circle at 50% 0%,
+    rgba(212, 175, 55, 0.14),
+    transparent 60%
+  );
+}
+
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+.animate-float { animation: float-slow 6s ease-in-out infinite; }
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+.animate-spin-slow { animation: spin-slow 60s linear infinite; }
+
+/* Hide scrollbar for horizontal scroll */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* Keep Google Translate UI from breaking the premium layout */
+body { top: 0 !important; }
+.goog-te-banner-frame,
+.goog-te-gadget-icon,
+.goog-te-gadget span,
+.goog-logo-link {
+  display: none !important;
+}
+.goog-te-gadget { color: transparent !important; }
+.skiptranslate iframe { display: none !important; }
+font { background: transparent !important; box-shadow: none !important; }
