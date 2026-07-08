@@ -2,21 +2,27 @@ import { db } from "@/db";
 import { bookings } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { getCashfreeOrder } from "@/lib/cashfree";
-
+import {
+  sendWhatsAppNotification,
+  formatBookingNotification,
+} from "@/lib/notify";
 export const dynamic = "force-dynamic";
-
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
   const orderId = searchParams.get("order_id");
   if (!orderId) {
     return Response.json({ ok: false, error: "order_id required" }, { status: 400 });
   }
-
   try {
     const order = await getCashfreeOrder(orderId);
     const paid = order.order_status === "PAID";
-
     const newStatus = paid ? "paid" : order.order_status === "ACTIVE" ? "pending" : "failed";
+    // Get current booking status to detect first-time paid transition
+    const [existing] = await db
+      .select()
+      .from(bookings)
+      .where(eq(bookings.orderId, orderId));
+    const wasAlreadyPaid = existing?.paymentStatus === "paid";
     await db
       .update(bookings)
       .set({
@@ -24,12 +30,14 @@ export async function GET(req: Request) {
         bookingStatus: paid ? "confirmed" : "new",
       })
       .where(eq(bookings.orderId, orderId));
-
     const [booking] = await db
       .select()
       .from(bookings)
       .where(eq(bookings.orderId, orderId));
-
+    // Send WhatsApp notification only on first successful payment
+    if (paid && !wasAlreadyPaid && booking) {
+      sendWhatsAppNotification(formatBookingNotification(booking)).catch(() => {});
+    }
     return Response.json({
       ok: true,
       paid,
