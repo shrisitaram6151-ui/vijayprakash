@@ -1,3 +1,8 @@
+// WhatsApp notification via CallMeBot (free API)
+// Setup: Save +34 644 91 96 80 in your phone contacts
+// Then send this WhatsApp message to it: "I allow callmebot to send me messages"
+// You will receive an API key — paste it in .env as CALLMEBOT_APIKEY
+
 const CALLMEBOT_PHONE = process.env.CALLMEBOT_PHONE || "918303333309";
 const CALLMEBOT_APIKEY = process.env.CALLMEBOT_APIKEY || "";
 
