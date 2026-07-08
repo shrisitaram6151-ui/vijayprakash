@@ -20,8 +20,9 @@ export function waLink(text = "नमस्ते महाराज जी, म
   )}`;
 }
 
-export function telLink() {
-  return `tel:+91${SITE.phone.replace(/\D/g, "")}`;
+export function telLink(phone?: string) {
+  const num = (phone || SITE.phone).replace(/\D/g, "");
+  return `tel:+91${num}`;
 }
 
 export function telLink2() {
