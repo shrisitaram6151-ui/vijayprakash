@@ -1,8 +1,10 @@
 import { db } from "@/db";
 import { callbacks } from "@/db/schema";
-
+import {
+  sendWhatsAppNotification,
+  formatCallbackNotification,
+} from "@/lib/notify";
 export const dynamic = "force-dynamic";
-
 export async function POST(req: Request) {
   try {
     const { name, phone, message } = await req.json();
@@ -24,6 +26,10 @@ export async function POST(req: Request) {
       phone: cleanPhone,
       message: message || null,
     });
+    // Send WhatsApp notification to admin (don't block response)
+    sendWhatsAppNotification(
+      formatCallbackNotification({ name, phone: cleanPhone, message })
+    ).catch(() => {});
     return Response.json({ ok: true });
   } catch {
     return Response.json({ ok: false, error: "कुछ त्रुटि हुई।" }, { status: 500 });
