@@ -281,11 +281,7 @@ export default async function HomePage() {
             <a href="/#contact" className="hover:text-amber-300">
               संपर्क
             </a>
-            <Link href="/admin" className="hover:text-amber-300">
-              एडमिन लॉगिन
-            </Link>
           </div>
-
           <div className="mt-12 space-y-2 text-xs text-amber-100/40">
             <p>{SITE.address}</p>
             <p>
